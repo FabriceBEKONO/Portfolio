@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fabrice Bekono — Réalisateur &amp; scénariste</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+
+  /* ---------- Tokens ---------- */
+  :root{
+    /* Default = "Le Creux" — lumineux, chaud, doré */
+    --bg: #f7ecd8;
+    --bg-alt: #f0e0bd;
+    --bg-panel: #fbf4e6;
+    --ink: #241d12;
+    --ink-dim: #6f5f42;
+    --ink-faint: #8f7f60;
+    --accent: #a9691f;
+    --accent-bright: #c07f24;
+    --line: rgba(36,29,18,0.14);
+    --line-strong: rgba(36,29,18,0.26);
+    --cold: #3a5560;
+    --serif: 'Fraunces', Georgia, 'Times New Roman', serif;
+    --sans: 'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      /* "La Réalité" — froid, sombre */
+      --bg: #0b1213;
+      --bg-alt: #0f1719;
+      --bg-panel: #101b1c;
+      --ink: #ece7da;
+      --ink-dim: #97a6a2;
+      --ink-faint: #6d7e7a;
+      --accent: #d7a545;
+      --accent-bright: #eab95c;
+      --line: rgba(236,231,218,0.12);
+      --line-strong: rgba(236,231,218,0.22);
+      --cold: #6f96a5;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg: #0b1213;
+    --bg-alt: #0f1719;
+    --bg-panel: #101b1c;
+    --ink: #ece7da;
+    --ink-dim: #97a6a2;
+    --ink-faint: #6d7e7a;
+    --accent: #d7a545;
+    --accent-bright: #eab95c;
+    --line: rgba(236,231,218,0.12);
+    --line-strong: rgba(236,231,218,0.22);
+    --cold: #6f96a5;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--sans);
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    transition:background .4s ease, color .4s ease;
+  }
+  ::selection{ background:var(--accent); color:var(--bg); }
+
+  img{max-width:100%;}
+  a{color:inherit;}
+  .wrap{
+    max-width:920px;
+    margin:0 auto;
+    padding:0 28px;
+  }
+  @media (max-width:640px){ .wrap{ padding:0 20px; } }
+
+  h1,h2,h3{
+    font-family:var(--serif);
+    font-weight:500;
+    margin:0;
+    letter-spacing:-0.01em;
+  }
+
+  /* ---------- Top bar ---------- */
+  .topbar{
+    position:sticky; top:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 28px;
+    background:color-mix(in srgb, var(--bg) 82%, transparent);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid transparent;
+  }
+  .topbar.scrolled{ border-bottom-color:var(--line); }
+  .mark{
+    font-family:var(--serif); font-weight:500; font-size:1.05rem;
+    text-decoration:none; color:var(--ink);
+  }
+  .mark em{ font-style:italic; color:var(--accent); }
+  .navlinks{ display:flex; gap:28px; font-size:0.9rem; }
+  .navlinks a{ text-decoration:none; color:var(--ink-dim); transition:color .2s; }
+  .navlinks a:hover{ color:var(--accent); }
+  .theme-toggle{
+    border:1px solid var(--line-strong); background:transparent; color:var(--ink-dim);
+    border-radius:100px; padding:6px 14px; font-family:var(--sans); font-size:0.82rem;
+    cursor:pointer; transition:all .2s;
+  }
+  .theme-toggle:hover{ color:var(--ink); border-color:var(--accent); }
+  @media (max-width:640px){ .navlinks{ display:none; } }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;
+    padding:min(16vh,140px) 28px 90px;
+    overflow:hidden;
+  }
+  .hero-glow{
+    position:absolute; top:-30%; left:-10%;
+    width:70vw; height:70vw; max-width:900px; max-height:900px;
+    background:radial-gradient(circle at 30% 30%, color-mix(in srgb, var(--accent) 55%, transparent), transparent 65%);
+    filter:blur(10px);
+    pointer-events:none;
+    opacity:0.55;
+  }
+  .hero-inner{ position:relative; max-width:920px; margin:0 auto; }
+  .hero-eyebrow{
+    font-size:0.92rem; color:var(--ink-dim); margin-bottom:22px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .hero-eyebrow .dot{ width:6px; height:6px; border-radius:50%; background:var(--accent); flex:none; }
+  h1.hero-title{
+    font-size:clamp(2.6rem, 7vw, 5.2rem);
+    line-height:0.98;
+    font-weight:400;
+    max-width:14ch;
+  }
+  h1.hero-title .last{ font-style:italic; color:var(--accent); font-weight:400; }
+  .hero-sub{
+    margin-top:28px;
+    max-width:52ch;
+    font-size:1.15rem;
+    color:var(--ink-dim);
+    font-family:var(--serif);
+    font-style:italic;
+    font-weight:400;
+  }
+  .hero-meta{
+    margin-top:44px;
+    display:flex; flex-wrap:wrap; gap:10px 14px;
+    font-size:0.86rem; color:var(--ink-faint);
+  }
+  .hero-meta span{
+    border:1px solid var(--line); border-radius:100px; padding:5px 13px;
+  }
+
+  /* ---------- Section framing ---------- */
+  section{ padding:70px 0; border-top:1px solid var(--line); }
+  .section-head{
+    display:flex; justify-content:space-between; align-items:baseline;
+    gap:24px; margin-bottom:44px;
+  }
+  .section-head h2{ font-size:clamp(1.6rem,3.4vw,2.1rem); font-weight:400; }
+  .section-tag{ font-size:0.86rem; color:var(--ink-faint); white-space:nowrap; }
+
+  /* ---------- Bio ---------- */
+  .bio-grid{
+    display:grid; grid-template-columns:0.9fr 1.5fr; gap:56px;
+  }
+  @media (max-width:760px){ .bio-grid{ grid-template-columns:1fr; gap:28px; } }
+  .bio-lede{
+    font-family:var(--serif); font-size:1.3rem; font-style:italic; color:var(--ink);
+    line-height:1.4;
+  }
+  .bio-body p{ margin:0 0 16px; color:var(--ink-dim); max-width:62ch; }
+  .bio-body p:last-child{ margin-bottom:0; }
+  .bio-body strong{ color:var(--ink); font-weight:500; }
+
+  /* ---------- Films ---------- */
+  .film{
+    padding:34px 0;
+    border-top:1px solid var(--line);
+    display:grid;
+    grid-template-columns:90px 1fr auto;
+    gap:24px;
+    align-items:start;
+  }
+  .film:first-of-type{ border-top:none; padding-top:0; }
+  @media (max-width:700px){
+    .film{ grid-template-columns:1fr; gap:10px; }
+  }
+  .film-year{
+    font-family:var(--serif); font-style:italic; color:var(--ink-faint); font-size:1.05rem; padding-top:4px;
+  }
+  .film-title{ font-size:1.5rem; margin-bottom:6px; font-weight:500; }
+  .film-title .dur{ font-family:var(--sans); font-size:0.85rem; color:var(--ink-faint); font-weight:400; margin-left:10px; }
+  .film-pitch{ color:var(--ink-dim); max-width:58ch; margin:0 0 12px; }
+  .film-awards{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:4px; }
+  .film-awards li{
+    font-size:0.84rem; color:var(--ink-faint); padding-left:16px; position:relative;
+  }
+  .film-awards li::before{ content:'—'; position:absolute; left:0; color:var(--accent); }
+  .film-link{
+    align-self:start;
+    white-space:nowrap;
+    text-decoration:none;
+    font-size:0.86rem;
+    color:var(--accent);
+    border-bottom:1px solid color-mix(in srgb, var(--accent) 55%, transparent);
+    padding-bottom:2px;
+    transition:opacity .2s;
+  }
+  .film-link:hover{ opacity:0.7; }
+
+  /* ---------- Limbo (feature) duality panel ---------- */
+  .limbo-intro{ max-width:64ch; color:var(--ink-dim); margin-bottom:40px; }
+  .limbo-intro strong{ color:var(--ink); font-weight:500; }
+  .duality{
+    display:grid; grid-template-columns:1fr 1fr;
+    border:1px solid var(--line-strong);
+    border-radius:2px;
+    overflow:hidden;
+  }
+  @media (max-width:700px){ .duality{ grid-template-columns:1fr; } }
+  .duality-panel{ padding:34px 30px; position:relative; }
+  .duality-panel.cold{
+    background:color-mix(in srgb, var(--cold) 14%, var(--bg-panel));
+  }
+  .duality-panel.warm{
+    background:color-mix(in srgb, var(--accent) 12%, var(--bg-panel));
+    border-left:1px solid var(--line-strong);
+  }
+  @media (max-width:700px){ .duality-panel.warm{ border-left:none; border-top:1px solid var(--line-strong); } }
+  .duality-label{
+    font-family:var(--serif); font-style:italic; font-size:1.15rem; margin-bottom:14px;
+  }
+  .duality-panel.cold .duality-label{ color:var(--cold); }
+  .duality-panel.warm .duality-label{ color:var(--accent); }
+  .duality-panel p{ margin:0; color:var(--ink-dim); font-size:0.95rem; }
+
+  .limbo-note{
+    margin-top:40px;
+    padding-left:22px;
+    border-left:2px solid var(--accent);
+  }
+  .limbo-note p{
+    font-family:var(--serif); font-style:italic; font-size:1.1rem;
+    color:var(--ink); line-height:1.55; margin:0 0 14px; max-width:60ch;
+  }
+  .limbo-note cite{ font-style:normal; font-size:0.82rem; color:var(--ink-faint); }
+
+  .limbo-links{ margin-top:32px; display:flex; flex-wrap:wrap; gap:14px; }
+  .pill-link{
+    text-decoration:none; font-size:0.86rem; color:var(--ink);
+    border:1px solid var(--line-strong); border-radius:100px; padding:9px 18px;
+    transition:all .2s;
+  }
+  .pill-link:hover{ border-color:var(--accent); color:var(--accent); }
+
+  /* ---------- Association ---------- */
+  .assoc{
+    display:grid; grid-template-columns:1.3fr 1fr; gap:40px; align-items:start;
+  }
+  @media (max-width:700px){ .assoc{ grid-template-columns:1fr; } }
+  .assoc p{ color:var(--ink-dim); max-width:56ch; margin:0 0 14px; }
+  .assoc-stats{ display:flex; flex-direction:column; gap:18px; }
+  .assoc-stat b{ display:block; font-family:var(--serif); font-size:1.8rem; font-weight:500; color:var(--accent); }
+  .assoc-stat span{ font-size:0.85rem; color:var(--ink-faint); }
+
+  /* ---------- Parcours ---------- */
+  .track{ display:flex; flex-direction:column; }
+  .track-row{
+    display:grid; grid-template-columns:150px 1fr;
+    gap:20px; padding:20px 0; border-top:1px solid var(--line);
+  }
+  .track-row:first-child{ border-top:none; padding-top:0; }
+  @media (max-width:600px){ .track-row{ grid-template-columns:1fr; gap:4px; } }
+  .track-date{ font-size:0.86rem; color:var(--ink-faint); font-family:var(--serif); font-style:italic; }
+  .track-what b{ font-weight:500; display:block; margin-bottom:3px; }
+  .track-what span{ color:var(--ink-dim); font-size:0.92rem; }
+
+  /* ---------- Contact / footer ---------- */
+  footer{
+    padding:80px 0 50px;
+    border-top:1px solid var(--line);
+  }
+  .contact-title{
+    font-size:clamp(2rem,5vw,3.2rem); font-weight:400; margin-bottom:28px; max-width:12ch;
+  }
+  .contact-title em{ color:var(--accent); font-style:italic; }
+  .contact-row{
+    display:flex; flex-wrap:wrap; gap:14px; margin-bottom:50px;
+  }
+  .contact-btn{
+    text-decoration:none; font-size:0.95rem; color:var(--bg);
+    background:var(--ink); border-radius:100px; padding:13px 26px;
+    transition:opacity .2s;
+  }
+  .contact-btn:hover{ opacity:0.85; }
+  .contact-btn.ghost{
+    color:var(--ink); background:transparent; border:1px solid var(--line-strong);
+  }
+  .foot-bottom{
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;
+    font-size:0.82rem; color:var(--ink-faint);
+  }
+
+  .reveal{ opacity:0; transform:translateY(14px); transition:opacity .6s ease, transform .6s ease; }
+  .reveal.in{ opacity:1; transform:none; }
+  @media (prefers-reduced-motion: reduce){
+    .reveal{ opacity:1; transform:none; transition:none; }
+    html{ scroll-behavior:auto; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar" id="topbar">
+  <a href="#top" class="mark">Fabrice <em>Bekono</em></a>
+  <nav class="navlinks">
+    <a href="#bio">Biographie</a>
+    <a href="#films">Films</a>
+    <a href="#limbo">Limbo</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <button class="theme-toggle" id="themeToggle" type="button" aria-label="Changer de thème">Le Creux / La Réalité</button>
+</div>
+
+<header class="hero" id="top">
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow"><span class="dot"></span> Réalisateur &amp; scénariste — Yaoundé / Paris</div>
+    <h1 class="hero-title">Un cinéma des zones que la société ne sait pas <span class="last">nommer.</span></h1>
+    <p class="hero-sub">Fabrice Bekono raconte les violences silencieuses, les deuils intérieurs et les espaces entre le rêve et la réalité — à travers courts métrages, un univers transmédia et une association de production indépendante.</p>
+    <div class="hero-meta">
+      <span>Né en 2000 à Yaoundé</span>
+      <span>Master 2 Cinéma &amp; Audiovisuel — Paul-Valéry Montpellier 3</span>
+      <span>Sélection Cannes 2023</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section id="bio">
+    <div class="section-head">
+      <h2>Biographie</h2>
+      <span class="section-tag">Yaoundé → Berlin → Montpellier → Paris</span>
+    </div>
+    <div class="bio-grid">
+      <p class="bio-lede">Être compris par un large public sans sacrifier la profondeur du propos — une exigence artistique.</p>
+      <div class="bio-body">
+        <p>Fabrice Bekono est un réalisateur et scénariste camerounais, né à Yaoundé en 2000. Son cinéma explore ce que la société ne sait pas nommer : les violences silencieuses, les deuils intérieurs, les espaces entre le rêve et la réalité — à travers un univers transmédia qu'il développe depuis plusieurs années.</p>
+        <p>Il débute comme scénariste avant de se former à la réalisation auprès de l'Université de Yaoundé I, de l'Institut Goethe, des Écrans Noirs et de la FilmArche à Berlin, puis complète un <strong>Master 2 Cinéma et Audiovisuel</strong> (parcours production) à l'Université Paul-Valéry Montpellier 3.</p>
+        <p>En 2021, il signe son premier court métrage, <strong>Jéricho</strong>, primé au festival Écrans Noirs. Son second film, <strong>Toxique</strong>, est présenté au Festival de Cannes en 2023, où il est repéré comme cinéaste émergent du continent. La même dynamique le mène en 2025 à une résidence documentaire à la Fémis, où il réalise <strong>The Courtesan's Übermensch</strong>.</p>
+        <p>En 2022, il fonde <strong>Limbo Independent Films</strong>, une association réunissant de jeunes passionnés de cinéma, avec l'ambition de produire des œuvres collaboratives et expérimentales hors des cadres classiques.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="films">
+    <div class="section-head">
+      <h2>Courts métrages</h2>
+      <span class="section-tag">2021 — 2025</span>
+    </div>
+
+    <div class="film">
+      <div class="film-year">2021</div>
+      <div>
+        <h3 class="film-title">Jéricho <span class="dur">10 min · fiction · Cameroun</span></h3>
+        <p class="film-pitch">Rejeté par la nature et abandonné à son sort, un jeune homme dont le seul héritage est une maladie incurable se voit guidé, vers les réponses à ses questions sur la cruauté du genre humain et le pourquoi de son existence.</p>
+        <ul class="film-awards">
+          <li>Prix de l'Écran de la Promesse — Festival Écrans Noirs</li>
+          <li>Prix du meilleur court métrage — Yarha Film Festival</li>
+          <li>Prix du meilleur court métrage — Journée du Jeune Cinéaste</li>
+          <li>Sélection officielle — LFC Award</li>
+        </ul>
+      </div>
+      <a class="film-link" href="https://www.youtube.com/watch?v=Gjl7nlUpBxw&t=10s" target="_blank" rel="noopener">Regarder ↗</a>
+    </div>
+
+    <div class="film">
+      <div class="film-year">2022</div>
+      <div>
+        <h3 class="film-title">Toxique <span class="dur">25 min · fiction · Cameroun – Allemagne</span></h3>
+        <p class="film-pitch">Entre la vie et la mort, une jeune femme coupable, trahie et aigrie, vit ses derniers instants avec le plus improbable des compagnons de voyage — jusqu'à accepter l'absurdité de ses désirs et la vérité sur ses passions.</p>
+        <ul class="film-awards">
+          <li>Distinction Talentueuse Caméra d'Afrique — Festival de Cannes 2023</li>
+          <li>Sélection officielle — Festival Écrans Noirs</li>
+        </ul>
+      </div>
+      <a class="film-link" href="https://youtu.be/AjqoNR87sFk" target="_blank" rel="noopener">Regarder ↗</a>
+    </div>
+
+    <div class="film">
+      <div class="film-year">2025</div>
+      <div>
+        <h3 class="film-title">The Courtesan's Übermensch <span class="dur">11 min · fiction · Cameroun – France</span></h3>
+        <p class="film-pitch">À travers une narration ironique et poétique, un essai visuel explore le pouvoir du désir sur les décisions masculines — de l'abandon d'un père jusqu'aux origines de la domination, où l'intime devient universel.</p>
+        <ul class="film-awards">
+          <li>Réalisé dans le cadre de la résidence de La Fémis</li>
+        </ul>
+      </div>
+      <a class="film-link" href="https://youtu.be/w_CAyxzsr1s" target="_blank" rel="noopener">Regarder ↗</a>
+    </div>
+  </section>
+
+  <section id="limbo">
+    <div class="section-head">
+      <h2>Limbo — long métrage en développement</h2>
+      <span class="section-tag">Premier fragment d'un univers plus large</span>
+    </div>
+    <p class="limbo-intro">Dans un monde parallèle, un homme marié vit une histoire d'amour avec une femme qui fait la moitié de son âge. Il tente d'échapper à une réalité dans laquelle il est à la fois le bourreau et la victime de son épouse. <strong>Limbo</strong> est le premier fragment visible d'un univers que Fabrice construit depuis plusieurs années ; le long métrage <strong>Harlequin</strong> en constituera le prochain chapitre.</p>
+
+    <div class="duality">
+      <div class="duality-panel cold">
+        <div class="duality-label">La réalité</div>
+        <p>Henri (50 ans) et Gwenaëlle (48 ans) sont mariés depuis une vingtaine d'années et n'arrivent pas à avoir d'enfant. Désespérée, Gwenaëlle drogue son mari à son insu pour tomber enceinte — un acte qu'elle ne perçoit pas comme une violence, et qu'Henri lui-même sera incapable de nommer.</p>
+      </div>
+      <div class="duality-panel warm">
+        <div class="duality-label">Le Creux</div>
+        <p>Pendant ce temps, Henri franchit les portes d'un univers parallèle où il rencontre Rita, jeune, fragile, lumineuse. Ce refuge onirique devient progressivement plus réel que sa vie — jusqu'à ce qu'il doive choisir entre une réalité qu'il ne comprend plus et un rêve qui l'a sauvé.</p>
+      </div>
+    </div>
+
+    <div class="limbo-note">
+      <p>« Limbo part d'une question simple : qu'arrive-t-il à un homme qui se fait violer par sa femme ? Henri n'est pas un héros, ni une victime au sens habituel du terme — c'est un homme ordinaire qui ne dispose pas des mots pour nommer ce qu'il vit, parce que la société ne les lui a pas donnés. »</p>
+      <cite>— Note d'intention, dossier artistique Limbo</cite>
+    </div>
+
+    <div class="limbo-links">
+      <a class="pill-link" href="https://drive.google.com/file/d/1fswiEPdNBncNtZl--ymNAL-1zFn8bmNOk/view" target="_blank" rel="noopener">Lire le scénario (V1) ↗</a>
+    </div>
+  </section>
+
+  <section id="association">
+    <div class="section-head">
+      <h2>Limbo Independent Films</h2>
+      <span class="section-tag">Depuis 2022 · Yaoundé</span>
+    </div>
+    <div class="assoc">
+      <p>Association réunissant de jeunes passionnés de cinéma, fondée par Fabrice en 2022, avec l'ambition de produire des œuvres collaboratives et expérimentales hors des cadres classiques. L'association conçoit, coordonne et finance des projets de films à faible budget, forme de jeunes cinéastes à l'écriture, la réalisation et la gestion de projets, et organise des projections publiques.</p>
+      <div class="assoc-stats">
+        <div class="assoc-stat"><b>12+</b><span>projets de films à faible budget accompagnés</span></div>
+        <div class="assoc-stat"><b>2022</b><span>année de fondation, Yaoundé</span></div>
+      </div>
+    </div>
+    <div class="limbo-links">
+      <a class="pill-link" href="https://sites.google.com/view/limbocinema" target="_blank" rel="noopener">Site de l'association ↗</a>
+      <a class="pill-link" href="https://www.youtube.com/playlist?list=PLKhV3z9BEzVqiIb3otmtWICEYhVHCA6J0" target="_blank" rel="noopener">Films produits par Limbo ↗</a>
+    </div>
+  </section>
+
+  <section id="parcours">
+    <div class="section-head">
+      <h2>Parcours</h2>
+      <span class="section-tag">Formation &amp; expérience</span>
+    </div>
+    <div class="track">
+      <div class="track-row">
+        <div class="track-date">2025</div>
+        <div class="track-what"><b>Master 2 Cinéma et Audiovisuel — Métiers de la production</b><span>Université Paul-Valéry Montpellier 3</span></div>
+      </div>
+      <div class="track-row">
+        <div class="track-date">2025</div>
+        <div class="track-what"><b>Résidence Documentaire</b><span>La Fémis, Université d'été — Paris</span></div>
+      </div>
+      <div class="track-row">
+        <div class="track-date">Mai – Juil. 2026</div>
+        <div class="track-what"><b>Stagiaire assistant de production</b><span>KV5 – Kromavision5, Paris — préparation et suivi des clips Fusion 2 et Jalousie</span></div>
+      </div>
+      <div class="track-row">
+        <div class="track-date">2022 – 2023</div>
+        <div class="track-what"><b>Licence professionnelle en production cinématographique</b><span>Institut supérieur de formation aux métiers du Cinéma et de l'Audiovisuel d'Afrique centrale — Yaoundé</span></div>
+      </div>
+      <div class="track-row">
+        <div class="track-date">2018 – 2019</div>
+        <div class="track-what"><b>Licence en Arts du Spectacle et Cinéma</b><span>Université de Yaoundé I</span></div>
+      </div>
+      <div class="track-row">
+        <div class="track-date">2021 – 2023</div>
+        <div class="track-what"><b>Scénariste et réalisateur, lauréat « 10 jours pour 1 film »</b><span>Goethe Institut Kamerun / Association Écrans Noirs — écriture et réalisation de deux courts métrages, participation au Kino Kabaret de Leipzig</span></div>
+      </div>
+    </div>
+  </section>
+
+  <footer id="contact">
+    <h2 class="contact-title">Discutons de votre <em>prochain film.</em></h2>
+    <div class="contact-row">
+      <a class="contact-btn" href="mailto:bekono.fabrice16@gmail.com">Écrire un email</a>
+      <a class="contact-btn ghost" href="https://www.linkedin.com/in/fabrice-bekono-626441389/" target="_blank" rel="noopener">LinkedIn ↗</a>
+    </div>
+    <div class="foot-bottom">
+      <span>Vélizy-Villacoublay, France</span>
+      <span>Fabrice Bekono — Réalisateur &amp; scénariste</span>
+    </div>
+  </footer>
+
+</main>
+
+<script>
+  // topbar shadow on scroll
+  const topbar = document.getElementById('topbar');
+  window.addEventListener('scroll', () => {
+    topbar.classList.toggle('scrolled', window.scrollY > 10);
+  }, { passive:true });
+
+  // manual theme toggle cycling: auto -> dark -> light -> auto
+  const toggle = document.getElementById('themeToggle');
+  const root = document.documentElement;
+  let state = 'auto';
+  toggle.addEventListener('click', () => {
+    if(state === 'auto'){ state = 'dark'; root.setAttribute('data-theme','dark'); }
+    else if(state === 'dark'){ state = 'light'; root.setAttribute('data-theme','light'); }
+    else { state = 'auto'; root.removeAttribute('data-theme'); }
+  });
+
+  // reveal on scroll
+  const reveals = document.querySelectorAll('section, footer');
+  reveals.forEach(el => el.classList.add('reveal'));
+  if('IntersectionObserver' in window){
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold:0.08 });
+    reveals.forEach(el => io.observe(el));
+  } else {
+    reveals.forEach(el => el.classList.add('in'));
+  }
+</script>
+
+</body>
+</html>
